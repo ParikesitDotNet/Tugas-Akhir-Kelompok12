@@ -161,11 +161,6 @@
                <string>Sirup</string>
               </property>
              </item>
-             <item>
-              <property name="text">
-               <string>Alat Kesehatan</string>
-              </property>
-             </item>
             </widget>
            </item>
            <item row="3" column="0">
