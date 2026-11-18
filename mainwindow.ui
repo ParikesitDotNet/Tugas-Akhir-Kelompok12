@@ -6,16 +6,455 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1100</width>
+    <height>650</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Apotek Sehat - Sistem Manajemen Inventaris &amp; Kedaluwarsa</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar"/>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayoutMain">
+    <property name="spacing">
+     <number>12</number>
+    </property>
+    <property name="leftMargin">
+     <number>15</number>
+    </property>
+    <property name="topMargin">
+     <number>15</number>
+    </property>
+    <property name="rightMargin">
+     <number>15</number>
+    </property>
+    <property name="bottomMargin">
+     <number>15</number>
+    </property>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayoutCards">
+      <property name="spacing">
+       <number>12</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="lblTotalObat">
+        <property name="styleSheet">
+         <string notr="true">background-color: #1e2d3b; color: #64b5f6; border: 1px solid #2b455c; border-radius: 6px; padding: 14px; font-size: 14px; font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>TOTAL JENIS OBAT: 0</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lblHampirExpired">
+        <property name="styleSheet">
+         <string notr="true">background-color: #3d3314; color: #ffd54f; border: 1px solid #66541e; border-radius: 6px; padding: 14px; font-size: 14px; font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>HAMPIR EXPIRED (90 HARI): 0</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lblSudahExpired">
+        <property name="styleSheet">
+         <string notr="true">background-color: #3b181a; color: #e57373; border: 1px solid #612529; border-radius: 6px; padding: 14px; font-size: 14px; font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>SUDAH EXPIRED: 0</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayoutContent">
+      <property name="spacing">
+       <number>15</number>
+      </property>
+      <item>
+       <widget class="QGroupBox" name="groupForm">
+        <property name="minimumSize">
+         <size>
+          <width>330</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>350</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="title">
+         <string>INPUT DATA OBAT</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayoutForm">
+         <item>
+          <layout class="QFormLayout" name="formLayoutInput">
+           <property name="verticalSpacing">
+            <number>12</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="lblKode">
+             <property name="text">
+              <string>Kode Obat:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="inputKode">
+             <property name="placeholderText">
+              <string>Contoh: OBT-001</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="lblNama">
+             <property name="text">
+              <string>Nama Obat:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="inputNama">
+             <property name="placeholderText">
+              <string>Contoh: Amoxicillin 500mg</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="lblKategori">
+             <property name="text">
+              <string>Kategori:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QComboBox" name="inputKategori">
+             <item>
+              <property name="text">
+               <string>Obat Bebas</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Obat Bebas Terbatas</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Obat Keras</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Sirup</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Alat Kesehatan</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="lblStok">
+             <property name="text">
+              <string>Stok:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QSpinBox" name="inputStok">
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>100000</number>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="lblHarga">
+             <property name="text">
+              <string>Harga (Rp):</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QSpinBox" name="inputHarga">
+             <property name="minimum">
+              <number>500</number>
+             </property>
+             <property name="maximum">
+              <number>10000000</number>
+             </property>
+             <property name="singleStep">
+              <number>500</number>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="lblExpired">
+             <property name="text">
+              <string>Tgl Expired:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QDateEdit" name="inputExpired">
+             <property name="displayFormat">
+              <string>yyyy-MM-dd</string>
+             </property>
+             <property name="calendarPopup">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="verticalSpacerForm">
+           <property name="orientation">
+            <enum>Qt::Orientation::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayoutFormButtons">
+           <item>
+            <widget class="QPushButton" name="btnSimpan">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton{background-color: #15803d; color: white; padding: 8px; font-weight: bold;}
+
+QPushButton:hover{
+background-color:#166534;
+}
+
+QPushButton:pressed{
+background-color:#16a34a;
+}</string>
+             </property>
+             <property name="text">
+              <string>Simpan Obat Baru</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnUpdate">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton{background-color: #0284c7; color: white; padding: 8px; font-weight: bold;}
+
+QPushButton:hover{
+background-color:#0369a1;
+}
+
+QPushButton:pressed{
+background-color:#0ea5e9;
+}</string>
+             </property>
+             <property name="text">
+              <string>Update Data</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupTabel">
+        <property name="title">
+         <string>DAFTAR INVENTARIS OBAT (Urut FEFO - Expired Terdekat)</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayoutTabel">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayoutSearch">
+           <item>
+            <widget class="QLabel" name="lblCari">
+             <property name="text">
+              <string>Cari:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="inputCari">
+             <property name="placeholderText">
+              <string>Ketik kode atau nama obat...</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lblFilter">
+             <property name="text">
+              <string>Filter:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="comboFilterKategori">
+             <property name="minimumSize">
+              <size>
+               <width>160</width>
+               <height>0</height>
+              </size>
+             </property>
+             <item>
+              <property name="text">
+               <string>Semua Kategori</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Obat Bebas</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Obat Bebas Terbatas</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Obat Keras</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Sirup</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Alat Kesehatan</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QTableWidget" name="tabelObat">
+           <property name="editTriggers">
+            <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+           </property>
+           <attribute name="horizontalHeaderStretchLastSection">
+            <bool>true</bool>
+           </attribute>
+           <column>
+            <property name="text">
+             <string>ID</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Kode</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Nama Obat</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Kategori</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Stok</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Harga</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Status &amp; Expired</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayoutActions">
+           <item>
+            <spacer name="horizontalSpacerActions">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnKeluar">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: #d87a00; color: white; padding: 8px 14px; font-weight: bold;</string>
+             </property>
+             <property name="text">
+              <string>Catat Obat Keluar </string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btnHapus">
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: #c62828; color: white; padding: 8px 14px; font-weight: bold;</string>
+             </property>
+             <property name="text">
+              <string>Hapus Obat Terpilih</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
  </widget>
  <resources/>
  <connections/>
