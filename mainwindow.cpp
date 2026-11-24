@@ -13,8 +13,12 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-struct OBAT_DATA
+enum OBAT_KATEGORI
 {
+    BEBAS,
+    TERBATAS,
+    KERAS,
+    SIRUP
 };
 
 enum OBAT_STATE
@@ -22,6 +26,16 @@ enum OBAT_STATE
     SAFE,
     MID_EXPIRED,
     EXPIRED
+};
+
+struct ObatData
+{
+    char Kode[10];
+    QString Nama;
+    OBAT_KATEGORI Kategori;
+    unsigned int stok;
+    unsigned int harga;
+    // ??? expired_date;
 };
 
 void MainWindow::on_btnItemSave_clicked()
