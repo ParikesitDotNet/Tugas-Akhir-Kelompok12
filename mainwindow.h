@@ -5,6 +5,8 @@
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QDebug>
+#include <QDate>
+#include <QDateTime>
 
 enum OBAT_KATEGORI
 {
@@ -63,4 +65,5 @@ private:
     void fillObatTable();
     void resetInputData();
     void updateJenisAmt(int amt);
+    OBAT_STATE compareTime(QDate dateInput);
 };

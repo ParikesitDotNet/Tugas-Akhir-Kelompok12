@@ -44,6 +44,24 @@ void MainWindow::fillObatTable()
     for (int i = 0; i < listObatData.size(); i++)
     {
         QString outputObat;
+        QString stateObat;
+
+        switch (compareTime(listObatData[i].expired_date))
+        {
+        case Aman:
+            stateObat = "Aman";
+            break;
+        case Pertengahan:
+            stateObat = "Hampir Kedaluarsa";
+            break;
+        case Kedaluarsa:
+            stateObat = "Kedaluarsa";
+            break;
+        default:
+            stateObat = "Unknown";
+            break;
+        }
+
         switch (listObatData[i].kategori)
         {
         case Bebas:
@@ -70,6 +88,34 @@ void MainWindow::fillObatTable()
         ui->tabelObat->setItem(i, 4, new QTableWidgetItem(QString::number(listObatData[i].harga)));
         // Untuk saat ini diisi tanggal expired dulu, akan diubah setelah diformat
         ui->tabelObat->setItem(i, 5, new QTableWidgetItem(listObatData[i].expired_date.toString("dd-MM-yyyy")));
+        ui->tabelObat->setItem(i, 6, new QTableWidgetItem(stateObat));
+    }
+}
+
+// Update header label
+void MainWindow::updateJenisAmt(int amt)
+{
+    QString outputText = QString("TOTAL JENIS OBAT: %1").arg(amt);
+    ui->lblTotalObat->setText(outputText);
+}
+
+// Compare Kedaularsa State
+OBAT_STATE MainWindow::compareTime(QDate dateInput)
+{
+    QDate currentDate = QDate::currentDate();
+    QDate period = currentDate.addDays(90);
+
+    if (dateInput < currentDate)
+    {
+        return Kedaluarsa;
+    }
+    else if (dateInput < period)
+    {
+        return Pertengahan;
+    }
+    else
+    {
+        return Aman;
     }
 }
 
@@ -80,6 +126,7 @@ void MainWindow::on_btnItemSave_clicked()
     listObatData.append(dataLists);
     fillObatTable();
     resetInputData();
+    updateJenisAmt(listObatData.length());
 }
 
 void MainWindow::on_btnItemUpdate_clicked()
