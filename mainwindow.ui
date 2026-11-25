@@ -236,6 +236,9 @@
           <layout class="QHBoxLayout" name="horizontalLayoutFormButtons">
            <item>
             <widget class="QPushButton" name="btnItemSave">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
@@ -248,6 +251,11 @@ background-color:#166534;
 
 QPushButton:pressed{
 background-color:#16a34a;
+}
+
+QPushButton:disabled{
+    background-color: rgba(21, 128, 61, 0.5);
+    color: rgba(255, 255, 255, 130);
 }</string>
              </property>
              <property name="text">

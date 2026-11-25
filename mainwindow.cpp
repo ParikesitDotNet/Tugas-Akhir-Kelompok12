@@ -15,6 +15,26 @@ MainWindow::~MainWindow()
 
 QVector<ObatData> listObatData;
 
+// Compare Kedaularsa State
+OBAT_STATE MainWindow::compareTime(QDate dateInput)
+{
+    QDate currentDate = QDate::currentDate();
+    QDate period = currentDate.addDays(90);
+
+    if (dateInput <= currentDate)
+    {
+        return Kedaluarsa;
+    }
+    else if (dateInput < period)
+    {
+        return Pertengahan;
+    }
+    else
+    {
+        return Aman;
+    }
+}
+
 // Input data Handler
 ObatData MainWindow::getInputData() const
 {
@@ -58,7 +78,7 @@ void MainWindow::fillObatTable()
             stateObat = "Kedaluarsa";
             break;
         default:
-            stateObat = "Unknown";
+            stateObat = "Tidak diketahui";
             break;
         }
 
@@ -86,47 +106,48 @@ void MainWindow::fillObatTable()
         ui->tabelObat->setItem(i, 2, new QTableWidgetItem(outputObat));
         ui->tabelObat->setItem(i, 3, new QTableWidgetItem(QString::number(listObatData[i].stok)));
         ui->tabelObat->setItem(i, 4, new QTableWidgetItem(QString::number(listObatData[i].harga)));
-        // Untuk saat ini diisi tanggal expired dulu, akan diubah setelah diformat
         ui->tabelObat->setItem(i, 5, new QTableWidgetItem(listObatData[i].expired_date.toString("dd-MM-yyyy")));
         ui->tabelObat->setItem(i, 6, new QTableWidgetItem(stateObat));
     }
 }
 
-// Update header label
-void MainWindow::updateJenisAmt(int amt)
+// Update labels
+void MainWindow::labelState()
 {
-    QString outputText = QString("TOTAL JENIS OBAT: %1").arg(amt);
-    ui->lblTotalObat->setText(outputText);
-}
+    int midExpired = 0, expired = 0;
 
-// Compare Kedaularsa State
-OBAT_STATE MainWindow::compareTime(QDate dateInput)
-{
-    QDate currentDate = QDate::currentDate();
-    QDate period = currentDate.addDays(90);
+    for (int i = 0; i < listObatData.length(); i++)
+    {
+        OBAT_STATE statusObat = compareTime(listObatData[i].expired_date);
+        if (statusObat == Pertengahan)
+        {
+            midExpired++;
+        }
+        else if (statusObat == Kedaluarsa)
+        {
+            expired++;
+        }
+    }
 
-    if (dateInput < currentDate)
-    {
-        return Kedaluarsa;
-    }
-    else if (dateInput < period)
-    {
-        return Pertengahan;
-    }
-    else
-    {
-        return Aman;
-    }
+    // Total obat
+    ui->lblTotalObat->setText(QString("TOTAL JENIS OBAT: %1").arg(listObatData.length()));
+
+    // Total mid-expired
+    ui->lblHampirExpired->setText(QString("HAMPIR KEDALUARSA (90 HARI): %1").arg(midExpired));
+
+    // Total expired
+    ui->lblSudahExpired->setText(QString("SUDAH KEDALUARSA: %1").arg(expired));
 }
 
 // Button Handler
 void MainWindow::on_btnItemSave_clicked()
 {
     ObatData dataLists = MainWindow::getInputData();
+
     listObatData.append(dataLists);
     fillObatTable();
     resetInputData();
-    updateJenisAmt(listObatData.length());
+    labelState();
 }
 
 void MainWindow::on_btnItemUpdate_clicked()
@@ -139,4 +160,23 @@ void MainWindow::on_btnItemOut_clicked()
 
 void MainWindow::on_btnItemRemove_clicked()
 {
+}
+
+// Input Onchange handler
+void MainWindow::validateItemForm()
+{
+    bool isInvalid = ui->inputKode->text().trimmed().isEmpty() ||
+                     ui->inputNama->text().trimmed().isEmpty();
+
+    ui->btnItemSave->setDisabled(isInvalid);
+}
+
+void MainWindow::on_inputKode_textChanged(const QString &arg1)
+{
+    validateItemForm();
+}
+
+void MainWindow::on_inputNama_textChanged(const QString &arg1)
+{
+    validateItemForm();
 }
