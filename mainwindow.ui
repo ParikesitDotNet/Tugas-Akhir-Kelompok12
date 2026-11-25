@@ -325,7 +325,12 @@ background-color:#0ea5e9;
            </column>
            <column>
             <property name="text">
-             <string>Status &amp; Expired</string>
+             <string>Tanggal Kedaluarsa</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Status</string>
             </property>
            </column>
           </widget>
