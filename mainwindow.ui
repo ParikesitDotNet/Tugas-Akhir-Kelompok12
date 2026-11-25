@@ -365,11 +365,6 @@ background-color:#0ea5e9;
            </attribute>
            <column>
             <property name="text">
-             <string>ID</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
              <string>Kode</string>
             </property>
            </column>
