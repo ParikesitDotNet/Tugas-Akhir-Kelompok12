@@ -62,4 +62,5 @@ private:
 
     void fillObatTable();
     void resetInputData();
+    void updateJenisAmt(int amt);
 };

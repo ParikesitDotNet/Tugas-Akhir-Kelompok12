@@ -15,6 +15,7 @@ MainWindow::~MainWindow()
 
 QVector<ObatData> listObatData;
 
+// Input data Handler
 ObatData MainWindow::getInputData() const
 {
     return ObatData{
@@ -28,13 +29,14 @@ ObatData MainWindow::getInputData() const
 
 void MainWindow::resetInputData()
 {
-    ui->inputKode->setText("");
-    ui->inputNama->setText("");
+    ui->inputKode->clear();
+    ui->inputNama->clear();
     ui->inputStok->setValue(0);
     ui->inputHarga->setValue(0);
     ui->inputKategori->setCurrentIndex(0);
 }
 
+// Table Handler
 void MainWindow::fillObatTable()
 {
     ui->tabelObat->setRowCount(listObatData.size());
@@ -67,47 +69,15 @@ void MainWindow::fillObatTable()
         ui->tabelObat->setItem(i, 3, new QTableWidgetItem(QString::number(listObatData[i].stok)));
         ui->tabelObat->setItem(i, 4, new QTableWidgetItem(QString::number(listObatData[i].harga)));
         // Untuk saat ini diisi tanggal expired dulu, akan diubah setelah diformat
-        ui->tabelObat->setItem(i, 5, new QTableWidgetItem(listObatData[i].expired_date.toString("yyyy-MM-dd")));
+        ui->tabelObat->setItem(i, 5, new QTableWidgetItem(listObatData[i].expired_date.toString("dd-MM-yyyy")));
     }
 }
 
+// Button Handler
 void MainWindow::on_btnItemSave_clicked()
 {
     ObatData dataLists = MainWindow::getInputData();
     listObatData.append(dataLists);
-
-    // for (int i = 0; i < listObatData.length(); i++)
-    // {
-    //     OBAT_KATEGORI tipeObat = listObatData[i].kategori;
-    //     QString outputObat;
-
-    //     switch (tipeObat)
-    //     {
-    //     case Bebas:
-    //         outputObat = "Bebas";
-    //         break;
-    //     case Terbatas:
-    //         outputObat = "Terbatas";
-    //         break;
-    //     case Keras:
-    //         outputObat = "Keras";
-    //         break;
-    //     case Sirup:
-    //         outputObat = "Sirup";
-    //         break;
-    //     default:
-    //         outputObat = "Tidak diketahui";
-    //         break;
-    //     }
-
-    //     qDebug() << "Obat ke-" << i << ": "
-    //              << listObatData[i].kode << ", "
-    //              << listObatData[i].nama << ", "
-    //              << outputObat << ", "
-    //              << listObatData[i].stok << ", "
-    //              << listObatData[i].harga << ", "
-    //              << listObatData[i].expired_date << ";";
-    // }
     fillObatTable();
     resetInputData();
 }
