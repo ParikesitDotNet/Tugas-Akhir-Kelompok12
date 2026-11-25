@@ -14,6 +14,7 @@ qt_add_executable(Medicine-Inventory-Management
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    helpers.cpp
 )
 
 target_link_libraries(Medicine-Inventory-Management PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)

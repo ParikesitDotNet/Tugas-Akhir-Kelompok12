@@ -1,12 +1,12 @@
 #pragma once
 
 #include <QDate>
+#include <QDateTime>
+#include <QDebug>
 #include <QMainWindow>
 #include <QTableWidget>
 #include <QTableWidgetItem>
-#include <QDebug>
-#include <QDate>
-#include <QDateTime>
+#include <QVector>
 
 enum OBAT_KATEGORI
 {
@@ -70,5 +70,5 @@ private:
     void resetInputData();
     void labelState();
     void validateItemForm();
-    OBAT_STATE compareTime(QDate dateInput);
+    OBAT_STATE compareTime(const QDate &dateInput) const;
 };
