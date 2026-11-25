@@ -54,7 +54,7 @@
          <string notr="true">background-color: #3d3314; color: #ffd54f; border: 1px solid #66541e; border-radius: 6px; padding: 14px; font-size: 14px; font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>HAMPIR EXPIRED (90 HARI): 0</string>
+         <string>HAMPIR KEDALUARSA (90 HARI): 0</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -67,7 +67,7 @@
          <string notr="true">background-color: #3b181a; color: #e57373; border: 1px solid #612529; border-radius: 6px; padding: 14px; font-size: 14px; font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>SUDAH EXPIRED: 0</string>
+         <string>SUDAH KEDALUARSA: 0</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -96,7 +96,7 @@
          </size>
         </property>
         <property name="title">
-         <string>INPUT DATA OBAT</string>
+         <string>Input Data Obat</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayoutForm">
          <item>
@@ -159,11 +159,6 @@
              <item>
               <property name="text">
                <string>Sirup</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Alat Kesehatan</string>
               </property>
              </item>
             </widget>
@@ -240,7 +235,7 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayoutFormButtons">
            <item>
-            <widget class="QPushButton" name="btnSimpan">
+            <widget class="QPushButton" name="btnItemSave">
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
@@ -261,7 +256,7 @@ background-color:#16a34a;
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btnUpdate">
+            <widget class="QPushButton" name="btnItemUpdate">
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
@@ -289,7 +284,7 @@ background-color:#0ea5e9;
       <item>
        <widget class="QGroupBox" name="groupTabel">
         <property name="title">
-         <string>DAFTAR INVENTARIS OBAT (Urut FEFO - Expired Terdekat)</string>
+         <string>Daftar Inventaris Obat</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayoutTabel">
          <item>
@@ -370,11 +365,6 @@ background-color:#0ea5e9;
            </attribute>
            <column>
             <property name="text">
-             <string>ID</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
              <string>Kode</string>
             </property>
            </column>
@@ -421,7 +411,7 @@ background-color:#0ea5e9;
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="btnKeluar">
+            <widget class="QPushButton" name="btnItemOut">
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
@@ -434,7 +424,7 @@ background-color:#0ea5e9;
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btnHapus">
+            <widget class="QPushButton" name="btnItemRemove">
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
