@@ -1,6 +1,37 @@
 #pragma once
 
+#include <QDate>
 #include <QMainWindow>
+#include <vector>
+#include <QTableWidget>
+#include <QTableWidgetItem>
+
+using std::vector;
+
+enum OBAT_KATEGORI
+{
+    Bebas,
+    Terbatas,
+    Keras,
+    Sirup
+};
+
+enum OBAT_STATE
+{
+    Aman,
+    Pertengahan,
+    Kedaluarsa
+};
+
+struct ObatData
+{
+    QString kode;
+    QString nama;
+    OBAT_KATEGORI kategori;
+    unsigned int stok;
+    unsigned int harga;
+    QDate expired_date;
+};
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -29,4 +60,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    ObatData getInputData() const;
+
+    void fillObatTable(const vector<ObatData> &data);
 };

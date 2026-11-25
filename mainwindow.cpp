@@ -13,30 +13,17 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-enum OBAT_KATEGORI
+ObatData MainWindow::getInputData() const
 {
-    BEBAS,
-    TERBATAS,
-    KERAS,
-    SIRUP
-};
-
-enum OBAT_STATE
-{
-    SAFE,
-    MID_EXPIRED,
-    EXPIRED
-};
-
-struct ObatData
-{
-    char Kode[10];
-    QString Nama;
-    OBAT_KATEGORI Kategori;
-    unsigned int stok;
-    unsigned int harga;
-    // ??? expired_date;
-};
+    return ObatData{
+        ui->inputKode->text(),
+        ui->inputNama->text(),
+        static_cast<OBAT_KATEGORI>(ui->inputKategori->currentIndex()),
+        static_cast<unsigned int>(ui->inputStok->value()),
+        static_cast<unsigned int>(ui->inputHarga->value()),
+        ui->inputExpired->date()
+    };
+}
 
 void MainWindow::on_btnItemSave_clicked()
 {
