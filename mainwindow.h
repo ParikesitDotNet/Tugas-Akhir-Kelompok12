@@ -2,11 +2,9 @@
 
 #include <QDate>
 #include <QMainWindow>
-#include <vector>
 #include <QTableWidget>
 #include <QTableWidgetItem>
-
-using std::vector;
+#include <QDebug>
 
 enum OBAT_KATEGORI
 {
@@ -62,5 +60,6 @@ private:
     Ui::MainWindow *ui;
     ObatData getInputData() const;
 
-    void fillObatTable(const vector<ObatData> &data);
+    void fillObatTable();
+    void resetInputData();
 };
