@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1100</width>
-    <height>650</height>
+    <width>1168</width>
+    <height>668</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -190,7 +190,7 @@
            <item row="4" column="1">
             <widget class="QSpinBox" name="inputHarga">
              <property name="minimum">
-              <number>500</number>
+              <number>1000</number>
              </property>
              <property name="maximum">
               <number>10000000</number>
@@ -210,7 +210,7 @@
            <item row="5" column="1">
             <widget class="QDateEdit" name="inputExpired">
              <property name="displayFormat">
-              <string>yyyy-MM-dd</string>
+              <string>dd-MM-yyyy</string>
              </property>
              <property name="calendarPopup">
               <bool>true</bool>
@@ -250,7 +250,7 @@ background-color:#166534;
 }
 
 QPushButton:pressed{
-background-color:#16a34a;
+background-color:#14532d;
 }
 
 QPushButton:disabled{
@@ -265,6 +265,9 @@ QPushButton:disabled{
            </item>
            <item>
             <widget class="QPushButton" name="btnItemUpdate">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
@@ -276,7 +279,12 @@ background-color:#0369a1;
 }
 
 QPushButton:pressed{
-background-color:#0ea5e9;
+background-color:#075985;
+}
+
+QPushButton:disabled{
+    background-color: rgba(2, 132, 199, 0.5);
+    color: rgba(255, 255, 255, 130);
 }</string>
              </property>
              <property name="text">
@@ -360,11 +368,27 @@ background-color:#0ea5e9;
            </item>
            <item>
             <widget class="QPushButton" name="btnItemOut">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: #d87a00; color: white; padding: 8px 14px; font-weight: bold;</string>
+              <string notr="true">QPushButton{background-color: #d97706; color: white; padding: 8px 14px; font-weight: bold;}
+
+QPushButton:hover{
+background-color:#b45309;
+}
+
+QPushButton:pressed{
+background-color:#92400e;
+}
+
+QPushButton:disabled{
+    background-color: rgba(217, 119, 6, 0.5);
+    color: rgba(255, 255, 255, 130);
+}</string>
              </property>
              <property name="text">
               <string>Catat Obat Keluar </string>
@@ -373,11 +397,27 @@ background-color:#0ea5e9;
            </item>
            <item>
             <widget class="QPushButton" name="btnItemRemove">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="cursor">
               <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: #c62828; color: white; padding: 8px 14px; font-weight: bold;</string>
+              <string notr="true">QPushButton{background-color: #dc2626; color: white; padding: 8px 14px; font-weight: bold;}
+
+QPushButton:hover{
+background-color:#b91c1c	;
+}
+
+QPushButton:pressed{
+background-color:#991b1b;
+}
+
+QPushButton:disabled{
+    background-color: rgba(220, 38, 38, 0.5);
+    color: rgba(255, 255, 255, 130);
+}</string>
              </property>
              <property name="text">
               <string>Hapus Obat Terpilih</string>

@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     this->setMinimumSize(1280, 720);
+    ui->inputExpired->setDate(QDate::currentDate());
 }
 
 MainWindow::~MainWindow()
