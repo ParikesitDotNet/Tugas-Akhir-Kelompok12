@@ -20,7 +20,8 @@ set(PROJECT_SOURCES
     src/mainwindow.cpp
     src/mainwindow.h
     src/mainwindow.ui
-    src/helpers.cpp
+    src/utils/inputData.cpp
+    src/utils/time.cpp
 )
 
 qt_standard_project_setup()
