@@ -31,6 +31,7 @@ struct ObatData
     unsigned int stok;
     unsigned int harga;
     QDate expired_date;
+    bool isOut = false;
 };
 
 QT_BEGIN_NAMESPACE
