@@ -150,7 +150,18 @@ void MainWindow::labelState()
 // Button Handler
 void MainWindow::on_btnItemSave_clicked()
 {
+
     ObatData dataLists = MainWindow::getInputData();
+
+    for (int i = 0; i < listObatData.length(); i++)
+    {
+        QString kodeObat = listObatData[i].kode;
+        if (kodeObat.toLower() == dataLists.kode.toLower())
+        {
+            warningModal("Perhatian!", QString("Kode Obat '%1' Telah Tersimpan di Table!").arg(dataLists.kode));
+            return;
+        }
+    }
 
     listObatData.append(dataLists);
     fillObatTable();

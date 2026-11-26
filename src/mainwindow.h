@@ -4,6 +4,7 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QMainWindow>
+#include <QMessageBox>
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QVector>
@@ -71,5 +72,6 @@ private:
     void resetInputData();
     void labelState();
     void validateItemForm();
+    void warningModal(QString title, QString msg);
     OBAT_STATE compareTime(const QDate &dateInput) const;
 };

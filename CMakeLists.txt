@@ -22,6 +22,7 @@ set(PROJECT_SOURCES
     src/mainwindow.ui
     src/utils/inputData.cpp
     src/utils/time.cpp
+    src/utils/modalDialog.cpp
 )
 
 qt_standard_project_setup()
