@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     this->setMinimumSize(1280, 720);
     ui->inputExpired->setDate(QDate::currentDate());
+    ui->btnItemUpdate->setDisabled(true);
 }
 
 MainWindow::~MainWindow()
@@ -152,6 +153,16 @@ void MainWindow::on_btnItemSave_clicked()
 {
     ObatData dataLists = MainWindow::getInputData();
 
+    for (int i = 0; i < listObatData.length(); i++)
+    {
+        QString kodeObat = listObatData[i].kode;
+        if (kodeObat.toLower() == dataLists.kode.toLower())
+        {
+            warningModal("Perhatian!", QString("Kode Obat '%1' Telah Tersimpan di Table!").arg(dataLists.kode));
+            return;
+        }
+    }
+
     listObatData.append(dataLists);
     fillObatTable();
     resetInputData();
@@ -160,6 +171,25 @@ void MainWindow::on_btnItemSave_clicked()
 
 void MainWindow::on_btnItemUpdate_clicked()
 {
+    ObatData updated = getInputData();
+
+    for (int i = 0; i < listObatData.size(); i++)
+    {
+        if (listObatData[i].kode.toLower() == updated.kode.toLower())
+        {
+            updated.isOut = listObatData[i].isOut;
+            listObatData[i] = updated;
+            fillObatTable();
+            resetInputData();
+            labelState();
+            selectedRow = -1;
+            ui->inputKode->setReadOnly(false);
+            validateItemForm();
+            return;
+        }
+    }
+
+    warningModal("Perhatian!", QString("Kode Obat '%1' tidak ditemukan!").arg(updated.kode));
 }
 
 void MainWindow::on_btnItemOut_clicked()
@@ -177,14 +207,75 @@ void MainWindow::validateItemForm()
                      ui->inputNama->text().trimmed().isEmpty();
 
     ui->btnItemSave->setDisabled(isInvalid);
+
+    bool hasChanged = false;
+    if (selectedRow >= 0 && selectedRow < listObatData.size())
+    {
+        ObatData current = getInputData();
+        const ObatData &orig = listObatData[selectedRow];
+        hasChanged = (current.kode != orig.kode) ||
+                     (current.nama != orig.nama) ||
+                     (current.kategori != orig.kategori) ||
+                     (current.stok != orig.stok) ||
+                     (current.harga != orig.harga) ||
+                     (current.expired_date != orig.expired_date);
+    }
+    ui->btnItemUpdate->setDisabled(isInvalid || selectedRow < 0 || !hasChanged);
+}
+
+void MainWindow::on_tabelObat_cellClicked(int row, int column)
+{
+    Q_UNUSED(column);
+    if (row < 0 || row >= listObatData.size())
+    {
+        return;
+    }
+
+    selectedRow = row;
+    const ObatData &data = listObatData[row];
+    ui->inputKode->setText(data.kode);
+    ui->inputKode->setReadOnly(true);
+    ui->inputNama->setText(data.nama);
+    ui->inputKategori->setCurrentIndex(static_cast<int>(data.kategori));
+    ui->inputStok->setValue(static_cast<int>(data.stok));
+    ui->inputHarga->setValue(static_cast<int>(data.harga));
+    ui->inputExpired->setDate(data.expired_date);
+
+    validateItemForm();
 }
 
 void MainWindow::on_inputKode_textChanged(const QString &arg1)
 {
+    Q_UNUSED(arg1);
     validateItemForm();
 }
 
 void MainWindow::on_inputNama_textChanged(const QString &arg1)
 {
+    Q_UNUSED(arg1);
+    validateItemForm();
+}
+
+void MainWindow::on_inputKategori_currentIndexChanged(int index)
+{
+    Q_UNUSED(index);
+    validateItemForm();
+}
+
+void MainWindow::on_inputStok_valueChanged(int arg1)
+{
+    Q_UNUSED(arg1);
+    validateItemForm();
+}
+
+void MainWindow::on_inputHarga_valueChanged(int arg1)
+{
+    Q_UNUSED(arg1);
+    validateItemForm();
+}
+
+void MainWindow::on_inputExpired_dateChanged(const QDate &date)
+{
+    Q_UNUSED(date);
     validateItemForm();
 }

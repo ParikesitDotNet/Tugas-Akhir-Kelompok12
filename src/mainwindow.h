@@ -4,6 +4,7 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QMainWindow>
+#include <QMessageBox>
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QVector>
@@ -63,13 +64,25 @@ private slots:
 
     void on_inputNama_textChanged(const QString &arg1);
 
+    void on_inputKategori_currentIndexChanged(int index);
+
+    void on_inputStok_valueChanged(int arg1);
+
+    void on_inputHarga_valueChanged(int arg1);
+
+    void on_inputExpired_dateChanged(const QDate &date);
+
+    void on_tabelObat_cellClicked(int row, int column);
+
 private:
     Ui::MainWindow *ui;
+    int selectedRow = -1;
     ObatData getInputData() const;
 
     void fillObatTable();
     void resetInputData();
     void labelState();
     void validateItemForm();
+    void warningModal(QString title, QString msg);
     OBAT_STATE compareTime(const QDate &dateInput) const;
 };
