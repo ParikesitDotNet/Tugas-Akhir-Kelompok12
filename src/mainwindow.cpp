@@ -24,22 +24,26 @@ void MainWindow::fillObatTable()
     for (int i = 0; i < listObatData.size(); i++)
     {
         QString outputObat;
-        QString stateObat;
+        QString stateObat = "Keluar";
+        OBAT_STATE currState = compareTime(listObatData[i].expired_date);
 
-        switch (compareTime(listObatData[i].expired_date))
+        if (!listObatData[i].isOut)
         {
-        case Aman:
-            stateObat = "Aman";
-            break;
-        case Pertengahan:
-            stateObat = "Hampir Kedaluarsa";
-            break;
-        case Kedaluarsa:
-            stateObat = "Kedaluarsa";
-            break;
-        default:
-            stateObat = "Tidak diketahui";
-            break;
+            switch (currState)
+            {
+            case Aman:
+                stateObat = "Aman";
+                break;
+            case Pertengahan:
+                stateObat = "Hampir Kedaluarsa";
+                break;
+            case Kedaluarsa:
+                stateObat = "Kedaluarsa";
+                break;
+            default:
+                stateObat = "Tidak diketahui";
+                break;
+            }
         }
 
         switch (listObatData[i].kategori)
@@ -68,17 +72,60 @@ void MainWindow::fillObatTable()
         ui->tabelObat->setItem(i, 4, new QTableWidgetItem(QString::number(listObatData[i].harga)));
         ui->tabelObat->setItem(i, 5, new QTableWidgetItem(listObatData[i].expired_date.toString("dd-MM-yyyy")));
         ui->tabelObat->setItem(i, 6, new QTableWidgetItem(stateObat));
+
+        // When the row medicine is out
+        if (listObatData[i].isOut)
+        {
+            for (int col = 0; col < ui->tabelObat->columnCount(); col++)
+            {
+                QTableWidgetItem *item = ui->tabelObat->item(i, col);
+                if (item)
+                {
+                    item->setBackground(QColor("#d97706"));
+                    item->setForeground(Qt::black);
+                }
+            }
+        }
+        else
+        {
+            QTableWidgetItem *item = ui->tabelObat->item(i, 6);
+            if (item)
+            {
+                QFont font = item->font();
+                font.setBold(true);
+                item->setFont(font);
+
+                switch (currState)
+                {
+                case Kedaluarsa:
+                    item->setForeground(QColor("#ef4444"));
+                    break;
+                case Pertengahan:
+                    item->setForeground(QColor("#facc15"));
+                    break;
+                default:
+                    item->setForeground(QColor("#4ade80"));
+                    break;
+                }
+            }
+        }
     }
 }
 
 // Update labels
 void MainWindow::labelState()
 {
-    int midExpired = 0, expired = 0;
+    int total = 0, midExpired = 0, expired = 0;
 
     for (int i = 0; i < listObatData.length(); i++)
     {
+        if (listObatData[i].isOut)
+        {
+            continue;
+        }
+
         OBAT_STATE statusObat = compareTime(listObatData[i].expired_date);
+
         if (statusObat == Pertengahan)
         {
             midExpired++;
@@ -87,10 +134,11 @@ void MainWindow::labelState()
         {
             expired++;
         }
+        total++;
     }
 
     // Total obat
-    ui->lblTotalObat->setText(QString("TOTAL JENIS OBAT: %1").arg(listObatData.length()));
+    ui->lblTotalObat->setText(QString("TOTAL JENIS OBAT: %1").arg(total));
 
     // Total mid-expired
     ui->lblHampirExpired->setText(QString("HAMPIR KEDALUARSA (90 HARI): %1").arg(midExpired));
