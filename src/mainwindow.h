@@ -1,12 +1,12 @@
 #pragma once
 
 #include <QDate>
+#include <QDateTime>
+#include <QDebug>
 #include <QMainWindow>
 #include <QTableWidget>
 #include <QTableWidgetItem>
-#include <QDebug>
-#include <QDate>
-#include <QDateTime>
+#include <QVector>
 
 enum OBAT_KATEGORI
 {
@@ -58,12 +58,17 @@ private slots:
 
     void on_btnItemRemove_clicked();
 
+    void on_inputKode_textChanged(const QString &arg1);
+
+    void on_inputNama_textChanged(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
     ObatData getInputData() const;
 
     void fillObatTable();
     void resetInputData();
-    void updateJenisAmt(int amt);
-    OBAT_STATE compareTime(QDate dateInput);
+    void labelState();
+    void validateItemForm();
+    OBAT_STATE compareTime(const QDate &dateInput) const;
 };

@@ -5,20 +5,37 @@ project(Medicine-Inventory-Management VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
+
+set(QtPROJECT_NAME
+    Medicine-Inventory-Management
+)
+
+set(PROJECT_SOURCES
+    src/main.cpp
+    src/mainwindow.cpp
+    src/mainwindow.h
+    src/mainwindow.ui
+    src/utils/inputData.cpp
+    src/utils/time.cpp
+)
 
 qt_standard_project_setup()
 
-qt_add_executable(Medicine-Inventory-Management
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
+qt_add_executable(${QtPROJECT_NAME}
+    MANUAL_FINALIZATION
+    ${PROJECT_SOURCES}
 )
 
-target_link_libraries(Medicine-Inventory-Management PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_include_directories(${QtPROJECT_NAME} PRIVATE src)
 
-set_target_properties(Medicine-Inventory-Management PROPERTIES
+target_link_libraries(${QtPROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
+set_target_properties(${QtPROJECT_NAME} PROPERTIES
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
@@ -26,8 +43,10 @@ set_target_properties(Medicine-Inventory-Management PROPERTIES
 )
 
 include(GNUInstallDirs)
-install(TARGETS Medicine-Inventory-Management
+install(TARGETS ${QtPROJECT_NAME}
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
+
+qt_finalize_executable(${QtPROJECT_NAME})
