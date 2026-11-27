@@ -85,4 +85,5 @@ private:
     void validateItemForm();
     void warningModal(QString title, QString msg);
     OBAT_STATE compareTime(const QDate &dateInput) const;
+    QVector<ObatData> listObatData;
 };

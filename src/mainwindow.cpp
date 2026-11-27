@@ -15,8 +15,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-QVector<ObatData> listObatData;
-
 // Table Handler
 void MainWindow::fillObatTable()
 {
@@ -158,7 +156,7 @@ void MainWindow::on_btnItemSave_clicked()
         QString kodeObat = listObatData[i].kode;
         if (kodeObat.toLower() == dataLists.kode.toLower())
         {
-            warningModal("Perhatian!", QString("Kode Obat '%1' Telah Tersimpan di Table!").arg(dataLists.kode));
+            warningModal("Perhatian!", QString("Kode Obat '%1' Telah Tersimpan di Tabel!").arg(dataLists.kode));
             return;
         }
     }
@@ -203,11 +201,13 @@ void MainWindow::on_btnItemRemove_clicked()
 // Input Onchange handler
 void MainWindow::validateItemForm()
 {
+    // Validasi Tombol Simpan Hijau
     bool isInvalid = ui->inputKode->text().trimmed().isEmpty() ||
                      ui->inputNama->text().trimmed().isEmpty();
 
     ui->btnItemSave->setDisabled(isInvalid);
 
+    // Validasi Tombol Update Biru, disabled ketika data tidak berubah atau kolom tidak ditekan
     bool hasChanged = false;
     if (selectedRow >= 0 && selectedRow < listObatData.size())
     {
@@ -244,6 +244,7 @@ void MainWindow::on_tabelObat_cellClicked(int row, int column)
     validateItemForm();
 }
 
+// Input Forms
 void MainWindow::on_inputKode_textChanged(const QString &arg1)
 {
     Q_UNUSED(arg1);
