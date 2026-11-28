@@ -74,6 +74,8 @@ private slots:
 
     void on_tabelObat_cellClicked(int row, int column);
 
+    void on_tabelObat_itemSelectionChanged();
+
 private:
     Ui::MainWindow *ui;
     int selectedRow = -1;
