@@ -23,26 +23,23 @@ void MainWindow::fillObatTable()
     for (int i = 0; i < listObatData.size(); i++)
     {
         QString outputObat;
-        QString stateObat = "Keluar";
+        QString stateObat;
         OBAT_STATE currState = compareTime(listObatData[i].expired_date);
 
-        if (!listObatData[i].isOut)
+        switch (currState)
         {
-            switch (currState)
-            {
-            case Aman:
-                stateObat = "Aman";
-                break;
-            case Pertengahan:
-                stateObat = "Hampir Kedaluarsa";
-                break;
-            case Kedaluarsa:
-                stateObat = "Kedaluarsa";
-                break;
-            default:
-                stateObat = "Tidak diketahui";
-                break;
-            }
+        case Aman:
+            stateObat = "Aman";
+            break;
+        case Pertengahan:
+            stateObat = "Hampir Kedaluarsa";
+            break;
+        case Kedaluarsa:
+            stateObat = "Kedaluarsa";
+            break;
+        default:
+            stateObat = "Tidak diketahui";
+            break;
         }
 
         switch (listObatData[i].kategori)
@@ -72,40 +69,24 @@ void MainWindow::fillObatTable()
         ui->tabelObat->setItem(i, 5, new QTableWidgetItem(listObatData[i].expired_date.toString("dd-MM-yyyy")));
         ui->tabelObat->setItem(i, 6, new QTableWidgetItem(stateObat));
 
-        // When the row medicine is out
-        if (listObatData[i].isOut)
+        QTableWidgetItem *item = ui->tabelObat->item(i, 6);
+        if (item)
         {
-            for (int col = 0; col < ui->tabelObat->columnCount(); col++)
-            {
-                QTableWidgetItem *item = ui->tabelObat->item(i, col);
-                if (item)
-                {
-                    item->setBackground(QColor("#d97706"));
-                    item->setForeground(Qt::black);
-                }
-            }
-        }
-        else
-        {
-            QTableWidgetItem *item = ui->tabelObat->item(i, 6);
-            if (item)
-            {
-                QFont font = item->font();
-                font.setBold(true);
-                item->setFont(font);
+            QFont font = item->font();
+            font.setBold(true);
+            item->setFont(font);
 
-                switch (currState)
-                {
-                case Kedaluarsa:
-                    item->setForeground(QColor("#ef4444"));
-                    break;
-                case Pertengahan:
-                    item->setForeground(QColor("#facc15"));
-                    break;
-                default:
-                    item->setForeground(QColor("#4ade80"));
-                    break;
-                }
+            switch (currState)
+            {
+            case Kedaluarsa:
+                item->setForeground(QColor("#ef4444"));
+                break;
+            case Pertengahan:
+                item->setForeground(QColor("#facc15"));
+                break;
+            default:
+                item->setForeground(QColor("#4ade80"));
+                break;
             }
         }
     }
@@ -114,15 +95,10 @@ void MainWindow::fillObatTable()
 // Update labels
 void MainWindow::labelState()
 {
-    int total = 0, midExpired = 0, expired = 0;
+    int midExpired = 0, expired = 0;
 
     for (int i = 0; i < listObatData.length(); i++)
     {
-        if (listObatData[i].isOut)
-        {
-            continue;
-        }
-
         OBAT_STATE statusObat = compareTime(listObatData[i].expired_date);
 
         if (statusObat == Pertengahan)
@@ -133,11 +109,10 @@ void MainWindow::labelState()
         {
             expired++;
         }
-        total++;
     }
 
     // Total obat
-    ui->lblTotalObat->setText(QString("TOTAL JENIS OBAT: %1").arg(total));
+    ui->lblTotalObat->setText(QString("TOTAL JENIS OBAT: %1").arg(listObatData.length()));
 
     // Total mid-expired
     ui->lblHampirExpired->setText(QString("HAMPIR KEDALUARSA (90 HARI): %1").arg(midExpired));
@@ -156,7 +131,7 @@ void MainWindow::on_btnItemSave_clicked()
         QString kodeObat = listObatData[i].kode;
         if (kodeObat.toLower() == dataLists.kode.toLower())
         {
-            warningModal("Perhatian!", QString("Kode Obat '%1' Telah Tersimpan di Tabel!").arg(dataLists.kode));
+            showModal(Warning, QString("Kode Obat '%1' Telah Tersimpan di Tabel!").arg(dataLists.kode));
             return;
         }
     }
@@ -175,7 +150,6 @@ void MainWindow::on_btnItemUpdate_clicked()
     {
         if (listObatData[i].kode.toLower() == updated.kode.toLower())
         {
-            updated.isOut = listObatData[i].isOut;
             listObatData[i] = updated;
             fillObatTable();
             resetInputData();
@@ -187,11 +161,28 @@ void MainWindow::on_btnItemUpdate_clicked()
         }
     }
 
-    warningModal("Perhatian!", QString("Kode Obat '%1' tidak ditemukan!").arg(updated.kode));
+    showModal(Warning, QString("Kode Obat '%1' tidak ditemukan!").arg(updated.kode));
 }
 
 void MainWindow::on_btnItemOut_clicked()
 {
+    if (selectedRow < 0)
+    {
+        return;
+    }
+
+    listObatData[selectedRow].stok--;
+    ObatData currData = listObatData[selectedRow];
+
+    if (currData.stok < 1)
+    {
+        listObatData.removeAt(selectedRow);
+        showModal(Info, QString("Stok obat '%1' dengan kode '%2' telah habis!").arg(currData.nama, currData.kode));
+    }
+
+    fillObatTable();
+    validateItemForm();
+    labelState();
 }
 
 void MainWindow::on_btnItemRemove_clicked()
@@ -215,9 +206,6 @@ void MainWindow::on_tabelObat_cellClicked(int row, int column)
     ui->inputStok->setValue(static_cast<int>(data.stok));
     ui->inputHarga->setValue(static_cast<int>(data.harga));
     ui->inputExpired->setDate(data.expired_date);
-
-    qDebug() << data.kode << data.nama << static_cast<int>(data.kategori)
-             << data.stok << data.harga << data.expired_date;
 
     validateItemForm();
 }
@@ -265,6 +253,8 @@ void MainWindow::on_tabelObat_itemSelectionChanged()
     {
         return;
     }
+
+    ui->inputKode->setReadOnly(false);
 
     resetInputData();
     validateItemForm();

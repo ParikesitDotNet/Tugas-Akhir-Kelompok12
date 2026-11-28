@@ -24,6 +24,13 @@ enum OBAT_STATE
     Kedaluarsa
 };
 
+enum MODAL_TYPE
+{
+    Info,
+    Warning,
+    Error
+};
+
 struct ObatData
 {
     QString kode;
@@ -32,7 +39,6 @@ struct ObatData
     unsigned int stok;
     unsigned int harga;
     QDate expired_date;
-    bool isOut = false;
 };
 
 QT_BEGIN_NAMESPACE
@@ -85,7 +91,7 @@ private:
     void resetInputData();
     void labelState();
     void validateItemForm();
-    void warningModal(QString title, QString msg);
+    void showModal(MODAL_TYPE m, QString msg);
     OBAT_STATE compareTime(const QDate &dateInput) const;
     QVector<ObatData> listObatData;
 };
