@@ -187,6 +187,23 @@ void MainWindow::on_btnItemOut_clicked()
 
 void MainWindow::on_btnItemRemove_clicked()
 {
+    if (selectedRow < 0)
+    {
+        return;
+    }
+
+    ObatData currData = listObatData[selectedRow];
+
+    if (!confimModal("Hapus obat?", "Apakah anda ingin menghapus obat ini secara permanen?"))
+    {
+        return;
+    }
+
+    listObatData.removeAt(selectedRow);
+
+    fillObatTable();
+    validateItemForm();
+    labelState();
 }
 
 void MainWindow::on_tabelObat_cellClicked(int row, int column)
@@ -255,7 +272,7 @@ void MainWindow::on_tabelObat_itemSelectionChanged()
     }
 
     ui->inputKode->setReadOnly(false);
-
+    selectedRow = -1;
     resetInputData();
     validateItemForm();
 }

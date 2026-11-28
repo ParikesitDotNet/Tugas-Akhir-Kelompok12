@@ -13,7 +13,7 @@ void MainWindow::showModal(MODAL_TYPE m, QString msg)
         QMessageBox::warning(this, "Perhatian!", msg);
         break;
 
-    case Error:
+    case Danger:
         QMessageBox::critical(this, "Error!", msg);
         break;
 
@@ -21,4 +21,22 @@ void MainWindow::showModal(MODAL_TYPE m, QString msg)
         QMessageBox::critical(this, "Error!", "Something went wrong!");
         break;
     }
+}
+
+bool MainWindow::confimModal(QString title, QString msg)
+{
+    bool state = false;
+
+    QMessageBox::StandardButton reply = QMessageBox::warning(
+        this,
+        title,
+        msg,
+        QMessageBox::Yes | QMessageBox::No);
+
+    if (reply == QMessageBox::Yes)
+    {
+        state = true;
+    }
+
+    return state;
 }

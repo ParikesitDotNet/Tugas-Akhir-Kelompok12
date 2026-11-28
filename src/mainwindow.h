@@ -28,7 +28,7 @@ enum MODAL_TYPE
 {
     Info,
     Warning,
-    Error
+    Danger
 };
 
 struct ObatData
@@ -91,7 +91,10 @@ private:
     void resetInputData();
     void labelState();
     void validateItemForm();
+
     void showModal(MODAL_TYPE m, QString msg);
+    bool confimModal(QString title, QString msg);
+
     OBAT_STATE compareTime(const QDate &dateInput) const;
     QVector<ObatData> listObatData;
 };
