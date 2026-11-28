@@ -83,3 +83,6 @@ CMakeLists.txt.user*
 
 # Database File
 *.db
+
+# Essential app file
+!appicon.rc
