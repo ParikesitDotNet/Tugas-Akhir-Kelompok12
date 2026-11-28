@@ -30,6 +30,7 @@ qt_standard_project_setup()
 qt_add_executable(${QtPROJECT_NAME}
     MANUAL_FINALIZATION
     ${PROJECT_SOURCES}
+    appicon.rc
 )
 
 target_include_directories(${QtPROJECT_NAME} PRIVATE src)

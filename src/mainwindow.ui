@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Apotek Sehat - Sistem Manajemen Inventaris &amp; Kedaluwarsa</string>
+   <string>Meditory - Medicine Inventory by Kelompok 12</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayoutMain">
@@ -391,7 +391,7 @@ QPushButton:disabled{
 }</string>
              </property>
              <property name="text">
-              <string>Catat Obat Keluar </string>
+              <string>Catat Obat Keluar (-1 Stok)</string>
              </property>
             </widget>
            </item>
