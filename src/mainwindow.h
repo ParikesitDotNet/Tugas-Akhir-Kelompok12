@@ -28,7 +28,7 @@ enum MODAL_TYPE
 {
     Info,
     Warning,
-    Error
+    Danger
 };
 
 struct ObatData

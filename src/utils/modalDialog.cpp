@@ -13,7 +13,7 @@ void MainWindow::showModal(MODAL_TYPE m, QString msg)
         QMessageBox::warning(this, "Perhatian!", msg);
         break;
 
-    case Error:
+    case Danger:
         QMessageBox::critical(this, "Error!", msg);
         break;
 
